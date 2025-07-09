@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To-Do List App</title>
+
+  <!-- PWA Support -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192.png" type="image/png" />
+  <meta name="theme-color" content="#007bff" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- Service Worker -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("✅ Service Worker registered"))
+        .catch(err => console.warn("Service Worker failed", err));
+    }
+  </script>
+</head>
+<body>
+
+  <!-- Launch Splash -->
+  <div id="app-launch-screen">
+    <img src="launch.jpg" alt="Welcome Splash" />
+    <h2>🚀 Made by Tech Projects</h2>
+  </div>
+
+  <div class="todo-container">
+    <h1>📝 To-Do List</h1>
+
+    <div class="top-buttons">
+      <button id="theme-toggle">🌙 Dark Mode</button>
+      <button id="sound-toggle">🔊 Sound On</button>
+    </div>
+
+    <div class="input-section">
+      <input type="text" id="task-input" placeholder="Enter a task..." />
+      <div class="input-group">
+        <input type="date" id="due-date" placeholder="Due Date" />
+        <input type="time" id="due-time" placeholder="Due Time" />
+      </div>
+      <button id="add-btn">➕ Add Task</button>
+    </div>
+
+    <ul id="task-list"></ul>
+    <p id="empty-message" class="empty-msg">📭 No tasks yet. Start by adding one!</p>
+
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="active">Active</button>
+      <button class="filter-btn" data-filter="completed">Completed</button>
+    </div>
+
+    <button id="clear-completed">🧹 Clear Completed</button>
+  </div>
+
+  <!-- Floating Settings Button -->
+  <button id="settings-btn">⚙️</button>
+
+  <!-- Settings Panel -->
+  <div id="settings-panel">
+    <h3>Settings</h3>
+    <label><input type="checkbox" id="toggle-dark" /> Dark Mode</label>
+    <label><input type="checkbox" id="toggle-sound" /> Enable Sound</label>
+    <label>
+      Theme:
+      <select id="color-theme">
+        <option value="default">Default</option>
+        <option value="ocean">Ocean</option>
+        <option value="sunset">Sunset</option>
+        <option value="forest">Forest</option>
+        <option value="midnight">Midnight</option>
+      </select>
+    </label>
+    <button id="clear-all-btn">🗑️ Clear All</button>
+    <button id="export-btn">📤 Export PDF</button>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Audio Effects -->
+  <audio id="add-sound" src="add.mp3" preload="auto"></audio>
+  <audio id="check-sound" src="check.mp3" preload="auto"></audio>
+  <audio id="reminder-sound" src="reminder.mp3" preload="auto"></audio>
+
+  <!-- Logic -->
+  <script src="script.js"></script>
+</body>
+</html>
